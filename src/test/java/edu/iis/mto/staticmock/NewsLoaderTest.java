@@ -1,19 +1,20 @@
 package edu.iis.mto.staticmock;
 
 import edu.iis.mto.staticmock.reader.NewsReader;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ConfigurationLoader.class, NewsReaderFactory.class})
-class NewsLoaderTest {
+@PrepareForTest({ConfigurationLoader.class, NewsReaderFactory.class, PublishableNews.class})
+public class NewsLoaderTest {
 
     ConfigurationLoader configurationLoader = PowerMockito.mock(ConfigurationLoader.class);
     Configuration configuration = PowerMockito.mock(Configuration.class);
@@ -27,8 +28,8 @@ class NewsLoaderTest {
     String readerType = "a";
     NewsLoader newsLoader;
 
-    @BeforeEach
-    void init(){
+    @Before
+    public void init(){
 
         newsLoader = new NewsLoader();
         incomingInfoList = new ArrayList<>();
@@ -50,7 +51,7 @@ class NewsLoaderTest {
 
     }
     @Test
-    void loadNews() {
+    public void loadNews() {
         newsLoader.loadNews();
     }
 }
