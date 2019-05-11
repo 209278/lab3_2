@@ -54,6 +54,7 @@ public class NewsLoaderTest {
         PowerMockito.when(PublishableNews.create()).thenReturn(publishableNews);
 
     }
+
     @Test
     public void checkIfAllContentIsAddedProperly() {
         incomingInfoList.add(new IncomingInfo("NONE", SubsciptionType.NONE));
@@ -67,5 +68,22 @@ public class NewsLoaderTest {
 
         Assert.assertThat(publicContent.size(), is(1));
         Assert.assertThat(subscribentContent.size(), is(3));
+    }
+
+    @Test
+    public void checkIfAllContentHasProperlyInfoContent() {
+        incomingInfoList.add(new IncomingInfo("NONE", SubsciptionType.NONE));
+        incomingInfoList.add(new IncomingInfo("A", SubsciptionType.A));
+        incomingInfoList.add(new IncomingInfo("B", SubsciptionType.B));
+        incomingInfoList.add(new IncomingInfo("C", SubsciptionType.C));
+        newsLoader.loadNews();
+
+        List<String> publicContent = Whitebox.getInternalState(publishableNews, "publicContent");
+        List<String> subscribentContent = Whitebox.getInternalState(publishableNews, "subscribentContent");
+
+        Assert.assertEquals("NONE", publicContent.get(0));
+        Assert.assertEquals("A", subscribentContent.get(0));
+        Assert.assertEquals("B", subscribentContent.get(1));
+        Assert.assertEquals("C", subscribentContent.get(2));
     }
 }
